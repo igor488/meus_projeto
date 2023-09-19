@@ -26,7 +26,7 @@ while (true) {
         //editar produto
 
     } else if (opcao == 3) {
-        alert("passou")
+        removerProduto()
 
         //remover produto
 
@@ -81,13 +81,13 @@ function editar() {
      * 
      *  "|" é usado para melhorar a legibilidade e a formatação de informações 
      * ao criar uma representação textual com várias partes distintas.
-     * 
+     *  
      * listaProdutos += i + 1é usado para numerar os produtos na lista,
      *  adicionando "i + 1" à variável listaProdutos, onde ié o índice atual do loop. 
      * Isso permite que os produtos sejam organizados com números sequenciais (1, 2, 3, ...)
      *  ao invés de começarem em 0.
-      */
-     
+     */
+
     for (let i = 0; i < lista.length; i++) {
         listaProdutos += i + 1 + "- Nome: " + lista[i].nome + " | Marca: " + lista[i].marca + " | Preço: " + lista[i].preco + "\n";
     }
@@ -99,9 +99,9 @@ function editar() {
      * É usado para combinar duas ou 
      * mais condições lógicas e verdadeiro retorna (true)
      *  se pelo menos uma das condições for verdadeira.
-    */
+     */
 
-    if ( edit < 1 || edit > lista.length) {
+    if (edit < 1 || edit > lista.length) {
         alert(" esse peoduto nao tem");
         return; // Sai da função
     }
@@ -111,7 +111,10 @@ function editar() {
     var novaMarca = prompt("Digite a nova marca do produto:");
     var novoPreco = prompt("Digite o novo preço do produto:");
 
-    // Atualiza as informações do produto escolhido
+    /**Atualiza as informações do produto escolhido  subtrair 1 de 
+    edit servir para ajustar o índice, tornando-o compatível com a indexação 
+    baseada em zero.*/
+
     lista[edit - 1].nome = novoNome;
     lista[edit - 1].marca = novaMarca;
     lista[edit - 1].preco = novoPreco;
@@ -120,6 +123,59 @@ function editar() {
 }
 
 
+
+
+function removerProduto() {
+    /**  Verifica se a lista está vazia
+     *  se não há nenhum produto cadastrado. 
+     * Se a lista estiver vazia, exibimos um alerta
+     *  informando que não há produtos na lista e saímos da função usando return.
+    */
+
+    if (lista.length === 0) {
+        alert("Não há produtos na lista.");
+        return; // Sair da função
+    }
+
+    /** Exibe a lista de produtos para o usuário escolher qual remover
+     * . Usamos um loop forpara percorrer cada produto na lista e formatamos
+     *  as informações do produto, incluindo seu nome, marca e preço.
+    */
+
+    var listaProdutos = "Produtos para remoção:\n";
+
+    for (let i = 0; i < lista.length; i++) {
+        listaProdutos += i + 1 + "- Nome: " + lista[i].nome + " | Marca: " + lista[i].marca + " | Preço: " + lista[i].preço + "\n";
+    }
+
+    var remover = prompt(listaProdutos + "Digite o número do produto que deseja remover:");
+
+    /**  Verifica se o índice é válido 
+     * Subtraímos 1 para ajustar o índice, já que as listas geralmente começam em 0
+     *         
+     *          Em seguida, verificamos se o indiceé válido:
+     * remove < 0 verifica se o índice é negativo, ou se não é válido
+     * 
+     * removee >= lista.length verifica se o remove é maior ou igual ao tamanho da lista, 
+     * ou que indica que o remove está fora dos limites da lista.
+    */
+
+    var remove = (remover) - 1;
+
+    if ( remove || remove < 0 || remove >= lista.length) {
+        alert("Índice inválido. Não foi possível remover o produto.");
+        return; // Sair da função
+    }
+
+    /**  Remove o produto da lista
+     * Usamos splice para remover o produto da lista. O primeiro argumento remove especifica
+     *  o remove do elemento a ser removido, e o segundo argumento 1 indica que queremos remover
+     *  apenas um elemento.
+     */
+    
+    lista.splice(remove, 1);
+    alert("Produto removido com sucesso!");
+}
 
 
 /**Função para visualizar os objetos 
